@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Каталог</title>
+</head>
+<body>
+<div id="main">
+    <h3>Меню</h3>
+    <a href="/homework_war">Главная</a>
+    <a href="/homework_war/catalog">Каталог</a>
+    <a href="/homework_war/find">Поиск</a>
+
+    <h1>Каталог интернет-магазина</h1>
+    <div th:if="${productList.size() != 0}">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Cost</th>
+            </tr>
+            <tr th:each="oneProduct : ${productList}">
+                <td th:text="${oneProduct.id}">...</td>
+                <td th:text="${oneProduct.title}">...</td>
+                <td th:text="${oneProduct.cost}">...</td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${productList.size() == 0}">
+        <p>Каталог пуст</p>
+    </div>
+
+    <h1>Добавить товар в каталог</h1>
+    <form action="#" th:action="@{/catalog}" method="post" th:object="${product}">
+        <div>
+            <label>Название (title)</label>
+            <input type="text" id="title" name="title"/>
+        </div>
+        <div>
+            <label>Цена (cost)</label>
+            <input type="text" id="cost" name="cost"/>
+        </div>
+        <div>
+            <button type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

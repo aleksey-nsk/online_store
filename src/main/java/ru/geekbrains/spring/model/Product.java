@@ -5,8 +5,6 @@ import java.math.RoundingMode;
 
 public class Product {
 
-    private static int counter = 0;
-
     private int id;
     private String title;
     private BigDecimal cost;
@@ -14,8 +12,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String title, double cost) {
-        this.id = counter++;
+    public Product(int id, String title, double cost) {
+        this.id = id;
         this.title = title;
         this.cost = new BigDecimal(cost).setScale(2, RoundingMode.HALF_UP);
     }
@@ -24,12 +22,24 @@ public class Product {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public BigDecimal getCost() {
         return cost;
+    }
+
+    public void setCost(BigDecimal cost) {
+        this.cost = cost;
     }
 
     @Override
