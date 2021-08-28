@@ -6,6 +6,7 @@ import ru.geekbrains.spring.exception.FindProductByIdException;
 import ru.geekbrains.spring.model.Product;
 
 import javax.annotation.PostConstruct;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,7 +28,8 @@ public class ProductRepository {
     }
 
     public List<Product> findAll() {
-        return database;
+//        return database;
+        return Collections.unmodifiableList(database); // лучше возвращать неизменяемую копию
     }
 
     public Product findById(int id) {
