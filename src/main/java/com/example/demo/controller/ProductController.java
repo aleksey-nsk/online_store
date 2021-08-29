@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@Log4j2
 public class ProductController {
 
     @Autowired
@@ -34,7 +33,7 @@ public class ProductController {
     }
 
     @PostMapping(value = "/catalog")
-    public String addProduct(@ModelAttribute Product product) {
+    public String addProduct(@ModelAttribute @Valid Product product) {
         productService.addProduct(product);
         return "redirect:/catalog";
     }
@@ -48,7 +47,6 @@ public class ProductController {
     public String findProduct(@RequestParam(value = "identifier", required = false) Integer id, Model model) {
         if (id != null) {
             Product productById = productService.findById(id);
-            log.debug("productById: " + productById);
             model.addAttribute("product", productById);
         }
         return "find";

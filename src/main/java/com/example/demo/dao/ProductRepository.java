@@ -34,7 +34,7 @@ public class ProductRepository {
     }
 
     public void addProduct(Product product) {
-        int id = counter.getAndIncrement();
+        final int id = counter.getAndIncrement();
         product.setId(id);
         log.debug("Сохраним в БД продукт: " + product);
         database.add(product);

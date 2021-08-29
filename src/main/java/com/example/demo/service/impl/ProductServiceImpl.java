@@ -25,20 +25,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(int id) {
-        log.debug("Поиск продукта по id=" + id);
-        Product product = productRepository.findById(id);
+        final Product product = productRepository.findById(id);
+        log.debug("По id=" + id + " найден продукт: " + product);
         return product;
 
     }
 
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(final Product product) {
         log.debug("Добавить новый продукт в каталог: " + product);
 
         List<Product> productList = productRepository.findAll();
         for (Product oneProduct : productList) {
             if (oneProduct.getTitle().equalsIgnoreCase(product.getTitle())) {
-                log.error("Товар '" + product.getTitle() + "' уже есть в каталоге!");
+                log.debug("Товар '" + product.getTitle() + "' уже есть в каталоге!");
                 return;
             }
         }
