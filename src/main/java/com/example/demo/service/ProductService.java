@@ -1,6 +1,6 @@
-package ru.geekbrains.spring.service;
+package com.example.demo.service;
 
-import ru.geekbrains.spring.model.Product;
+import com.example.demo.model.Product;
 
 import java.util.List;
 

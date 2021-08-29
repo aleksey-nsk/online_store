@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.exception;
+package com.example.demo.exception;
 
 public class FindProductByIdException extends RuntimeException {
 

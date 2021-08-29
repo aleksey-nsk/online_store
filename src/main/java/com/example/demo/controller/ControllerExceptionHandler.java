@@ -1,9 +1,9 @@
-package ru.geekbrains.spring.controller;
+package com.example.demo.controller;
 
+import com.example.demo.exception.FindProductByIdException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.geekbrains.spring.exception.FindProductByIdException;
 
 // Чтобы не писать обработку исключений в каждом контроллере,
 // можно создать единую точку

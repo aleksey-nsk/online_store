@@ -1,11 +1,11 @@
-package ru.geekbrains.spring.service.impl;
+package com.example.demo.service.impl;
 
+import com.example.demo.dao.ProductRepository;
+import com.example.demo.model.Product;
+import com.example.demo.service.ProductService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.geekbrains.spring.dao.ProductRepository;
-import ru.geekbrains.spring.model.Product;
-import ru.geekbrains.spring.service.ProductService;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product findById(int id) {
+        log.debug("Поиск продукта по id=" + id);
         Product product = productRepository.findById(id);
         return product;
 

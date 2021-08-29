@@ -1,4 +1,4 @@
-package ru.geekbrains.spring.model;
+package com.example.demo.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,0 +1,8 @@
+server:
+    port: 8080
+
+logging:
+    level:
+        com.example.demo: debug
+    file:
+        name: logs/app_debug.log

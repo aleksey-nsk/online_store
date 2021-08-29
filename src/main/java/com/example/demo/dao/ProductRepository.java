@@ -1,11 +1,10 @@
-package ru.geekbrains.spring.dao;
+package com.example.demo.dao;
 
+import com.example.demo.exception.FindProductByIdException;
+import com.example.demo.model.Product;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
-import ru.geekbrains.spring.exception.FindProductByIdException;
-import ru.geekbrains.spring.model.Product;
 
-import javax.annotation.PostConstruct;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -15,16 +14,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Log4j2
 public class ProductRepository {
 
-    private List<Product> database; // in-memory БД в виде списка
-
+    private List<Product> database = new CopyOnWriteArrayList<>(); // in-memory БД в виде списка
     private static AtomicInteger counter = new AtomicInteger(0);
 
     public ProductRepository() {
-    }
-
-    @PostConstruct
-    public void init() {
-        database = new CopyOnWriteArrayList<>();
     }
 
     public List<Product> findAll() {
