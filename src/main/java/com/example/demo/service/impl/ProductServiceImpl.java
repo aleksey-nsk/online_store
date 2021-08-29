@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
         List<Product> productList = productRepository.findAll();
         for (Product oneProduct : productList) {
             if (oneProduct.getTitle().equalsIgnoreCase(product.getTitle())) {
-                log.debug("Товар '" + product.getTitle() + "' уже есть в каталоге!");
+                log.error("Товар '" + product.getTitle() + "' уже есть в каталоге!");
                 return;
             }
         }
