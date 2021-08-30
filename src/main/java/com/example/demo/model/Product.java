@@ -1,40 +1,37 @@
 package com.example.demo.model;
 
+import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
+@Entity
+@Table(name = "products")
 public class Product {
 
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
     @NotNull
     @NotEmpty
     @NotBlank
+    @Column(name = "title")
     private String title;
 
     @NotNull
     @Min(0)
+    @Column(name = "cost")
     private BigDecimal cost;
 
     public Product() {
     }
 
-    public Product(int id, String title, double cost) {
-        this.id = id;
-        this.title = title;
-        this.cost = new BigDecimal(cost).setScale(2, RoundingMode.HALF_UP);
-    }
-
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTitle() {
