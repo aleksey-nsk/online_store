@@ -19,14 +19,19 @@ public class HibernateSessionFactoryUtil { // утилитный класс дл
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
-                Configuration configuration = new Configuration().configure();
+                // Создаём объект конфигурации,
+                // и передаём ему те классы, которые он должен воспринимать как сущности
+                Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
                 configuration.addAnnotatedClass(Product.class);
 
+                // Properties - это параметры для работы Hibernate,
+                // указанные в файле hibernate.cfg.xml
                 Properties properties = configuration.getProperties();
 
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(properties);
 
                 sessionFactory = configuration.buildSessionFactory(builder.build());
+
             } catch (Exception e) {
                 log.error(e.getMessage());
             }

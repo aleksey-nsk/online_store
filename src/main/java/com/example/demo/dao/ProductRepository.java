@@ -17,8 +17,7 @@ public class ProductRepository {
     public void addProduct(Product product) {
         log.debug("Сохраним в БД продукт: " + product);
 
-        // Получаем сессию соединения с нашей БД
-        // с помощью Фабрики Сессий
+        // Получаем сессию соединения с нашей БД с помощью Фабрики Сессий
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
 
         // Создаём в рамках сессии транзакцию
@@ -26,7 +25,6 @@ public class ProductRepository {
 
         // Выполняем необходимые действия над данными
         session.save(product);
-//        session.persist(product);
 
         // Сохраняем результаты транзакции в БД
         transaction.commit();
@@ -37,7 +35,7 @@ public class ProductRepository {
         log.debug("В БД был сохранён продукт: " + product);
     }
 
-    public List<Product> findAll() {
+    public List<Product> findAllProducts() {
         log.debug("Получить из БД все продукты");
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Query query = session.createQuery("SELECT p FROM Product p");
@@ -46,7 +44,7 @@ public class ProductRepository {
         return products;
     }
 
-    public Product findById(int id) {
+    public Product findProductById(int id) {
         log.debug("Получить из БД продукт с id=" + id);
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Product product = (Product) session.get(Product.class, id);
