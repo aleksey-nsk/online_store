@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Покупатели</title>
+</head>
+<body>
+<div id="main">
+    <h3>Меню</h3>
+    <a href="/">Главная</a>
+    <a href="/catalog">Каталог</a>
+    <a href="/find">Поиск</a>
+    <a href="/customer">Покупатели</a>
+
+    <h1>Покупатели и их покупки</h1>
+    <div th:if="${customerList.size() != 0}">
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Покупатель</th>
+                <th>Список покупок</th>
+            </tr>
+            <tr th:each="oneCustomer : ${customerList}">
+                <td th:text="${oneCustomer.id}">...</td>
+                <td th:text="${oneCustomer.name}">...</td>
+                <td th:text="${oneCustomer.purchases}">...</td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${customerList.size() == 0}">
+        <p>Список покупателей пуст</p>
+    </div>
+
+    <h1>Добавить покупателя</h1>
+    <form action="#" th:action="@{/customer}" method="post" th:object="${customer}">
+        <div>
+            <label>Имя покупателя</label>
+            <input type="text" id="name" name="name"/>
+        </div>
+        <div>
+            <button type="submit">Добавить</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

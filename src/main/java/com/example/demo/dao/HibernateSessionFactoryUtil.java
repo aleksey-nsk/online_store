@@ -1,6 +1,8 @@
 package com.example.demo.dao;
 
+import com.example.demo.model.Customer;
 import com.example.demo.model.Product;
+import com.example.demo.model.Purchase;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -23,6 +25,8 @@ public class HibernateSessionFactoryUtil { // утилитный класс дл
                 // и передаём ему те классы, которые он должен воспринимать как сущности
                 Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
                 configuration.addAnnotatedClass(Product.class);
+                configuration.addAnnotatedClass(Customer.class);
+                configuration.addAnnotatedClass(Purchase.class);
 
                 // Properties - это параметры для работы Hibernate,
                 // указанные в файле hibernate.cfg.xml
