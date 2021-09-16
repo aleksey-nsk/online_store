@@ -1,54 +1,63 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Product;
+import com.example.demo.dto.ProductDto;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    @GetMapping(value = "/")
-    public String index(Model model) {
-        model.addAttribute("message", "Добро пожаловать в интернет-магазин");
-        return "index";
+    @GetMapping
+    public List<ProductDto> findAll() {
+        return productService.findAll();
     }
 
-    @GetMapping(value = "/catalog")
-    public String catalog(Model model) {
-        List<Product> productList = productService.findAll();
-        model.addAttribute("productList", productList);
-        return "catalog";
+    @GetMapping("/{id}")
+    public ProductDto findById(@PathVariable Integer id) {
+        return productService.findById(id);
     }
 
-    @PostMapping(value = "/catalog")
-    public String addProduct(@ModelAttribute @Valid Product product) {
-        productService.addProduct(product);
-        return "redirect:/catalog";
+    @PostMapping
+    public void save(@RequestBody ProductDto productDto) {
+        productService.save(productDto);
     }
 
-    @GetMapping(value = "/find")
-    public String getFindPage() {
-        return "find";
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id) {
+        productService.deleteById(id);
     }
 
-    @PostMapping(value = "/find")
-    public String findProduct(@RequestParam(value = "identifier", required = false) Integer id, Model model) {
-        if (id != null) {
-            Product productById = productService.findById(id);
-            model.addAttribute("product", productById);
-        }
-        return "find";
-    }
+//    @GetMapping(value = "/catalog")
+//    public String catalog(Model model) {
+//        List<Product> productList = productService.findAll();
+//        model.addAttribute("productList", productList);
+//        return "catalog";
+//    }
+
+//    @PostMapping(value = "/catalog")
+//    public String addProduct(@ModelAttribute @Valid Product product) {
+//        productService.addProduct(product);
+//        return "redirect:/catalog";
+//    }
+
+//    @GetMapping(value = "/find")
+//    public String getFindPage() {
+//        return "find";
+//    }
+
+//    @PostMapping(value = "/find")
+//    public String findProduct(@RequestParam(value = "identifier", required = false) Integer id, Model model) {
+//        if (id != null) {
+//            Product productById = productService.findById(id);
+//            model.addAttribute("product", productById);
+//        }
+//        return "find";
+//    }
 }

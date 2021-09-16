@@ -1,14 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.model.Product;
+import com.example.demo.dto.ProductDto;
 
 import java.util.List;
 
 public interface ProductService {
 
-    List<Product> findAll();
+    List<ProductDto> findAll();
 
-    Product findById(int id);
+    ProductDto findById(Integer id);
 
-    void addProduct(Product product);
+    void save(ProductDto productDto);
+
+    void deleteById(Integer id);
 }
