@@ -37,8 +37,34 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 .then(function (resp) {
                     console.log(resp);
                     $scope.fillTable();
-                })
-    }
+                });
+    };
+
+    // $scope.getFiltered = function () {
+    //     console.log($scope.NewFilter);
+    //     $http.post(contextPath + '/product/filter', $scope.NewFilter)
+    //             .then(function (resp) {
+    //                 console.log(resp);
+    //                 $scope.fillTable();
+    //             });
+    // };
+
+    // $scope.sortByPrice=function(){
+    //     $http.get(contextPath + '/product/sort')
+    //             .then(function (resp) {
+    //                 console.log(resp);
+    //                 $scope.Products = resp.data;
+    //             });
+    // };
+
+    $scope.doSort = function () {
+        console.log($scope.NewSorted);
+        $http.post(contextPath + '/product/sort', $scope.NewSorted)
+                .then(function (resp) {
+                    console.log(resp);
+                    $scope.Products = resp.data;
+                });
+    };
 
     $scope.fillTable();
 

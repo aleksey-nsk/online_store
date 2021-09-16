@@ -23,7 +23,7 @@
             <td>Id</td>
             <td>Название</td>
             <td>Цена</td>
-            <td>Удалить</td>
+            <td>Удалить товар</td>
         </tr>
         </thead>
         <tbody>
@@ -37,11 +37,24 @@
         </tr>
         </tbody>
     </table>
+    <!--    <div>-->
+    <!--        <button type="button" class="btn btn-primary" ng-click="sortByPrice()">Отсортировать по цене</button>-->
+    <!--    </div>-->
 
-<!--    <h3>Отсортировать товары в каталоге</h3>-->
-<!--    <form novalidate ng-submit="doFilter()">-->
-<!--    </form>-->
+    <h3>Отсортировать товары в каталоге</h3>
+    <form novalidate ng-submit="doSort()">
+        <div class="form-group col-md-6">
+            <p><label><input type="radio" value="INCREASE" ng-model="NewSorted.type"></label> По увеличению цены</p>
+            <p><label><input type="radio" value="DECREASE" ng-model="NewSorted.type"></label> По уменьшению цены</p>
+            <p><label><input type="radio" value="ALPHABET" ng-model="NewSorted.type"></label> По алфавиту</p>
+            <p><label><input type="radio" value="WITHOUT" ng-model="NewSorted.type"></label> Без сортировки</p>
+        </div>
+        <div>
+            <button class="btn btn-primary" type="submit">Отсортировать</button>
+        </div>
+    </form>
 
+    <br/>
     <h3>Добавить товар в каталог</h3>
     <form novalidate ng-submit="saveProduct()">
         <div class="form-group col-md-6">

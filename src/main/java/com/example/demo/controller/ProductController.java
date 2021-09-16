@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProductDto;
 import com.example.demo.service.ProductService;
+import com.example.demo.sort.Sorted;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +34,14 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Integer id) {
         productService.deleteById(id);
+    }
+
+    // Сортировка
+    @PostMapping("/sort")
+    public List<ProductDto> findSorted(@RequestBody Sorted sorted) {
+//        return productService.findAll(Sort.by("name"));
+//        return productService.findAllWithSortByPrice();
+        return productService.findSorted(sorted);
     }
 
 //    @GetMapping(value = "/catalog")

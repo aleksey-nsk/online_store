@@ -4,8 +4,10 @@ import com.example.demo.dto.ProductDto;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
+import com.example.demo.sort.Sorted;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,6 +62,52 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Integer id) {
         log.debug("Удалить из БД товар с идентификатором: " + id);
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ProductDto> findAllWithSortByPrice() {
+        List<ProductDto> productDtoList = productRepository.findAll(Sort.by("price"))
+                .stream()
+                .map(it -> ProductDto.valueOf(it))
+                .collect(Collectors.toList());
+        log.debug("Все товары, отсортированные по цене: " + productDtoList);
+        return productDtoList;
+    }
+
+    @Override
+    public List<ProductDto> findSorted(Sorted sorted) {
+        log.debug("Тип сортировки: " + sorted.getType());
+
+        Sort.Direction direction;
+        String property;
+
+        switch (sorted.getType()) {
+            case INCREASE:
+                direction = Sort.Direction.ASC;
+                property = "price";
+                break;
+            case DECREASE:
+                direction = Sort.Direction.DESC;
+                property = "price";
+                break;
+            case ALPHABET:
+                direction = Sort.Direction.ASC;
+                property = "title";
+                break;
+            case WITHOUT:
+            default:
+                direction = Sort.Direction.ASC;
+                property = "id";
+                break;
+        }
+
+        List<ProductDto> productDtoList = productRepository.findAll(Sort.by(direction, property))
+                .stream()
+                .map(it -> ProductDto.valueOf(it))
+                .collect(Collectors.toList());
+
+        log.debug("Список отсортированных товаров: " + productDtoList);
+        return productDtoList;
     }
 
 
