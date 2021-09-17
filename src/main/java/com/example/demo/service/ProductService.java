@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.ProductDto;
-import com.example.demo.sort.Sorted;
+import com.example.demo.utils.Sorted;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public interface ProductService {
 
     void deleteById(Integer id);
 
-    List<ProductDto> findAllWithSortByPrice();
-
     List<ProductDto> findSorted(Sorted sorted);
+
+    void changePrice(Integer id, ProductDto productDto);
 }

@@ -23,7 +23,7 @@
             <td>Id</td>
             <td>Название</td>
             <td>Цена</td>
-            <td>Удалить товар</td>
+            <td>Изменить цену</td>
         </tr>
         </thead>
         <tbody>
@@ -31,15 +31,17 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+
+            <td><input class="form-control" type="number" ng-model="new_price"></td>
+<!--            <td><button class="btn btn-success" ng-click="changePrice(p.id, new_price)">Изменить цену</button></td>-->
+            <td><button class="btn btn-success" ng-click="changePrice(p, new_price)">Изменить цену</button></td>
+
             <td>
-                <button class="btn-danger" ng-click="deleteProduct(p.id)">Удалить</button>
+                <button class="btn-danger" ng-click="deleteProduct(p.id)">Удалить товар</button>
             </td>
         </tr>
         </tbody>
     </table>
-    <!--    <div>-->
-    <!--        <button type="button" class="btn btn-primary" ng-click="sortByPrice()">Отсортировать по цене</button>-->
-    <!--    </div>-->
 
     <h3>Отсортировать товары в каталоге</h3>
     <form novalidate ng-submit="doSort()">

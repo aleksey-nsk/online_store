@@ -2,9 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ProductDto;
 import com.example.demo.service.ProductService;
-import com.example.demo.sort.Sorted;
+import com.example.demo.utils.Sorted;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,10 +38,14 @@ public class ProductController {
     // Сортировка
     @PostMapping("/sort")
     public List<ProductDto> findSorted(@RequestBody Sorted sorted) {
-//        return productService.findAll(Sort.by("name"));
-//        return productService.findAllWithSortByPrice();
         return productService.findSorted(sorted);
     }
+
+    @PutMapping("/{id}")
+    public void changePrice(@PathVariable Integer id, @RequestBody ProductDto productDto) {
+        productService.changePrice(id, productDto);
+    }
+
 
 //    @GetMapping(value = "/catalog")
 //    public String catalog(Model model) {

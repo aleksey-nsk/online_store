@@ -19,7 +19,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     $scope.fillTable = function () {
         $http.get(contextPath + '/product')
                 .then(function (resp) {
-                    console.log(resp);
+                    // console.log(resp); // лог в консоль браузера (F12 - Console)
                     $scope.Products = resp.data;
                 });
     };
@@ -27,7 +27,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     $scope.saveProduct = function () {
         $http.post(contextPath + '/product', $scope.NewProduct)
                 .then(function (resp) {
-                    console.log(resp);
+                    // console.log(resp);
                     $scope.fillTable();
                 });
     };
@@ -35,7 +35,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     $scope.deleteProduct = function (id) {
         $http.delete(contextPath + '/product/' + id)
                 .then(function (resp) {
-                    console.log(resp);
+                    // console.log(resp);
                     $scope.fillTable();
                 });
     };
@@ -49,20 +49,30 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     //             });
     // };
 
-    // $scope.sortByPrice=function(){
-    //     $http.get(contextPath + '/product/sort')
-    //             .then(function (resp) {
-    //                 console.log(resp);
-    //                 $scope.Products = resp.data;
-    //             });
-    // };
-
     $scope.doSort = function () {
-        console.log($scope.NewSorted);
+        // console.log($scope.NewSorted);
         $http.post(contextPath + '/product/sort', $scope.NewSorted)
                 .then(function (resp) {
-                    console.log(resp);
+                    // console.log(resp);
                     $scope.Products = resp.data;
+                });
+    };
+
+    // $scope.changePrice = function (id, new_price) {
+    $scope.changePrice = function (OldProduct, new_price) {
+        console.log('Функция changePrice()');
+        console.log(new_price);
+        console.log(OldProduct);
+        NewProduct={
+            "id":OldProduct.id,
+            "title":OldProduct.title,
+            "price": new_price
+        };
+        console.log(NewProduct);
+        $http.put(contextPath + '/product/' + OldProduct.id, NewProduct)
+                .then(function (resp) {
+                    console.log(resp);
+                    $scope.fillTable()
                 });
     };
 

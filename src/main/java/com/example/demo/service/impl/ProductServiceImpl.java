@@ -4,13 +4,15 @@ import com.example.demo.dto.ProductDto;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
-import com.example.demo.sort.Sorted;
+import com.example.demo.utils.Sorted;
+import com.example.demo.utils.SortedType;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -65,23 +67,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDto> findAllWithSortByPrice() {
-        List<ProductDto> productDtoList = productRepository.findAll(Sort.by("price"))
-                .stream()
-                .map(it -> ProductDto.valueOf(it))
-                .collect(Collectors.toList());
-        log.debug("Все товары, отсортированные по цене: " + productDtoList);
-        return productDtoList;
-    }
-
-    @Override
     public List<ProductDto> findSorted(Sorted sorted) {
-        log.debug("Тип сортировки: " + sorted.getType());
+        SortedType type = sorted.getType();
+        log.debug("Тип сортировки: " + type);
 
         Sort.Direction direction;
         String property;
 
-        switch (sorted.getType()) {
+        switch (type) {
             case INCREASE:
                 direction = Sort.Direction.ASC;
                 property = "price";
@@ -110,29 +103,20 @@ public class ProductServiceImpl implements ProductService {
         return productDtoList;
     }
 
+    @Override
+    public void changePrice(Integer id, ProductDto productDto) {
+        log.debug("Изменить цену у товара с id: " + id + "; товар: " + productDto);
 
-//    @Override
-//    public Product findById(int id) {
-//        final Product product = productRepository.findProductById(id);
-//        log.debug("По id=" + id + " найден продукт: " + product);
-//        return product;
-//
-//        return null;
-//    }
-
-//    @Override
-//    public void addProduct(Product product) {
-//        log.debug("Добавить новый продукт в каталог: " + product);
-//
-//        List<Product> productList = productRepository.findAllProducts();
-//        for (Product oneProduct : productList) {
-//            if (oneProduct.getTitle().equalsIgnoreCase(product.getTitle())) {
-//                log.error("Товар '" + product.getTitle() + "' уже есть в каталоге!");
-//                return;
-//            }
-//        }
-//
-//        productRepository.addProduct(product);
-//    }
-
+        if (productRepository.existsById(id)) {
+            Product productForUpdating = productRepository.getById(id);
+            Integer changedPrice = productDto.getPrice();
+            productForUpdating.setPrice(changedPrice);
+            log.debug("productForUpdating: " + productForUpdating);
+            productRepository.save(productForUpdating);
+            log.debug("productForUpdating: " + productForUpdating);
+        } else {
+            log.error("Нет товара с указанным id: " + id);
+            throw new NoSuchElementException();
+        }
+    }
 }
