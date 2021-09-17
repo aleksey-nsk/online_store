@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -20,12 +21,22 @@ public class Product {
     @Column(name = "price")
     private Integer price;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Product() {
     }
 
-    public Product(Integer id, String title, Integer price) {
+    public Product(Integer id, String title, Integer price, Category category) {
         this.id = id;
         this.title = title;
         this.price = price;
+        this.category = category;
+    }
+
+    @JsonIgnore
+    public Category getCategory() {
+        return category;
     }
 }

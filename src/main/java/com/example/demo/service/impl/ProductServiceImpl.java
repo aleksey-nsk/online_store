@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.dto.ProductDto;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.utils.Sorted;
@@ -21,6 +23,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public List<ProductDto> findAll() {
@@ -54,7 +59,13 @@ public class ProductServiceImpl implements ProductService {
     public void save(ProductDto productDto) {
         Product product = productDto.mapToProduct();
 
-        log.debug("Добавить в БД новый товар: " + product);
+        Category category = product.getCategory();
+        if (category != null) {
+            String categoryName = category.getName();
+            Category byName = categoryRepository.findByName(categoryName);
+            product.setCategory(byName);
+        }
+
         productRepository.save(product);
         log.debug("В БД сохранён новый товар: " + product);
     }

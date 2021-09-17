@@ -22,6 +22,7 @@
         <tr>
             <td>Id</td>
             <td>Название</td>
+            <td>Категория</td>
             <td>Цена</td>
             <td>Изменить цену</td>
         </tr>
@@ -30,11 +31,14 @@
         <tr ng-repeat="p in Products"> <!-- получаем из бэкенда массив, и по нему итерируемся -->
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
+            <td>{{p.category.name}}</td>
             <td>{{p.price}}</td>
 
             <td><input class="form-control" type="number" ng-model="new_price"></td>
-<!--            <td><button class="btn btn-success" ng-click="changePrice(p.id, new_price)">Изменить цену</button></td>-->
-            <td><button class="btn btn-success" ng-click="changePrice(p, new_price)">Изменить цену</button></td>
+            <!--            <td><button class="btn btn-success" ng-click="changePrice(p.id, new_price)">Изменить цену</button></td>-->
+            <td>
+                <button class="btn btn-success" ng-click="changePrice(p, new_price)">Изменить цену</button>
+            </td>
 
             <td>
                 <button class="btn-danger" ng-click="deleteProduct(p.id)">Удалить товар</button>
@@ -67,13 +71,15 @@
             <label>Цена</label>
             <input class="form-control" type="number" ng-model="NewProduct.price">
         </div>
+
         <!-- Пытаюсь сделать выпадающий список -->
-        <!--            <div class="form-group col-md-6">-->
-        <!--                <label for="exampleFormControlSelect1">Категория</label>-->
-        <!--                <select class="form-control" id="exampleFormControlSelect1" ng-model="NewCategory.selectedCategory">-->
-        <!--                    <option ng-repeat="x in Categories" value="{{x.id}}">{{x.name}}</option>-->
-        <!--                </select>-->
-        <!--            </div>-->
+        <div class="form-group col-md-6">
+            <label for="categorySelect">Категория</label>
+            <select class="form-control" id="categorySelect" ng-model="NewCategory.name">
+                <option ng-repeat="category in Categories" value="{{category.name}}">{{category.name}}</option>
+            </select>
+        </div>
+
         <div>
             <button class="btn btn-success" type="submit">Сохранить</button>
         </div>

@@ -5,26 +5,41 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     const contextPath = 'http://localhost:8082';
 
     // Пытаюсь сделать выпадающий список
-    $scope.Categories = [
-        {
-            "id": 1,
-            "name": "Категория_01"
-        },
-        {
-            "id": 2,
-            "name": "Категория_02"
-        }
-    ];
+    // $scope.Categories = [
+    //     {
+    //         "id": 1,
+    //         "name": "Категория_01"
+    //     },
+    //     {
+    //         "id": 2,
+    //         "name": "Категория_02"
+    //     }
+    // ];
+
+    $scope.getCategories = function () {
+        $http.get(contextPath + '/category')
+                .then(function (resp) {
+                    // console.log(resp);
+                    $scope.Categories = resp.data;
+                });
+    };
 
     $scope.fillTable = function () {
         $http.get(contextPath + '/product')
                 .then(function (resp) {
                     // console.log(resp); // лог в консоль браузера (F12 - Console)
                     $scope.Products = resp.data;
+                    $scope.getCategories();
                 });
     };
 
     $scope.saveProduct = function () {
+        console.log($scope.NewProduct);
+        console.log($scope.NewCategory);
+
+        $scope.NewProduct.category = $scope.NewCategory;
+        console.log($scope.NewProduct);
+
         $http.post(contextPath + '/product', $scope.NewProduct)
                 .then(function (resp) {
                     // console.log(resp);
