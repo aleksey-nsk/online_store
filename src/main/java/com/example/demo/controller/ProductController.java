@@ -6,6 +6,7 @@ import com.example.demo.utils.Sorted;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public void save(@RequestBody ProductDto productDto) {
+    public void save(@RequestBody @Valid ProductDto productDto) {
         productService.save(productDto);
     }
 
@@ -35,42 +36,14 @@ public class ProductController {
         productService.deleteById(id);
     }
 
+    @PutMapping("/{id}")
+    public void updateProduct(@PathVariable Integer id, @RequestBody @Valid ProductDto newProductDto) {
+        productService.updateProduct(id, newProductDto);
+    }
+
     // Сортировка
     @PostMapping("/sort")
     public List<ProductDto> findSorted(@RequestBody Sorted sorted) {
         return productService.findSorted(sorted);
     }
-
-    @PutMapping("/{id}")
-    public void updateProduct(@PathVariable Integer id, @RequestBody ProductDto newProductDto) {
-        productService.updateProduct(id, newProductDto);
-    }
-
-
-//    @GetMapping(value = "/catalog")
-//    public String catalog(Model model) {
-//        List<Product> productList = productService.findAll();
-//        model.addAttribute("productList", productList);
-//        return "catalog";
-//    }
-
-//    @PostMapping(value = "/catalog")
-//    public String addProduct(@ModelAttribute @Valid Product product) {
-//        productService.addProduct(product);
-//        return "redirect:/catalog";
-//    }
-
-//    @GetMapping(value = "/find")
-//    public String getFindPage() {
-//        return "find";
-//    }
-
-//    @PostMapping(value = "/find")
-//    public String findProduct(@RequestParam(value = "identifier", required = false) Integer id, Model model) {
-//        if (id != null) {
-//            Product productById = productService.findById(id);
-//            model.addAttribute("product", productById);
-//        }
-//        return "find";
-//    }
 }

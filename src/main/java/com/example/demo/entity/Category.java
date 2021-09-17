@@ -20,7 +20,6 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @OneToMany(mappedBy = "category")
     private List<Product> products;
 
     public Category() {

@@ -43,13 +43,11 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> optionalProduct = productRepository.findById(id);
         log.debug("optionalProduct: " + optionalProduct);
 
-
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
             ProductDto productDto = ProductDto.valueOf(product);
             return productDto;
         } else {
-//            throw new FindProductByIdException("По указанному id=" + id + " товар не найден");
             log.error("По указанному id=" + id + " товар не найден");
             return null;
         }
@@ -74,6 +72,18 @@ public class ProductServiceImpl implements ProductService {
     public void deleteById(Integer id) {
         log.debug("Удалить из БД товар с идентификатором: " + id);
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateProduct(Integer id, ProductDto newProductDto) {
+        log.debug("Обновить товар с id: " + id);
+
+        Product oldProduct = productRepository.getById(id);
+        Product newProduct = newProductDto.mapToProduct();
+        log.debug("Текущий товар: " + oldProduct);
+        log.debug("Новый товар: " + newProduct);
+
+        productRepository.save(newProduct);
     }
 
     @Override
@@ -111,17 +121,5 @@ public class ProductServiceImpl implements ProductService {
 
         log.debug("Список отсортированных товаров: " + productDtoList);
         return productDtoList;
-    }
-
-    @Override
-    public void updateProduct(Integer id, ProductDto newProductDto) {
-        log.debug("Обновить товар с id: " + id);
-
-        Product oldProduct = productRepository.getById(id);
-        Product newProduct = newProductDto.mapToProduct();
-        log.debug("Текущий товар: " + oldProduct);
-        log.debug("Новый товар: " + newProduct);
-
-        productRepository.save(newProduct);
     }
 }

@@ -16,74 +16,74 @@
 <body>
 <div class="container" ng-controller="indexController">
 
-    <h3>Каталог товаров</h3>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
-        <thead>
-        <tr>
-            <td>Id</td>
-            <td>Название</td>
-            <td>Категория</td>
-            <td>Цена</td>
-            <td>Изменить цену</td>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="p in Products"> <!-- получаем из бэкенда массив, и по нему итерируемся -->
-            <td>{{p.id}}</td>
-            <td>{{p.title}}</td>
-            <td>{{p.category.name}}</td>
-            <td>{{p.price}}</td>
+    <div>
+        <h3>Каталог товаров</h3>
+        <table class="table table-hover" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <td>Id</td>
+                <td>Название</td>
+                <td>Категория</td>
+                <td>Цена</td>
+                <td>Изменить цену</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="p in Products"> <!-- получаем из бэкенда массив, и по нему итерируемся -->
+                <td>{{p.id}}</td>
+                <td>{{p.title}}</td>
+                <td>{{p.category.name}}</td>
+                <td>{{p.price}}</td>
+                <td><input class="form-control" type="number" ng-model="new_price"></td>
+                <td>
+                    <button class="btn btn-success" ng-click="changePrice(p, new_price)">Изменить цену</button>
+                </td>
+                <td>
+                    <button class="btn-danger" ng-click="deleteProduct(p.id)">Удалить товар</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 
-            <td><input class="form-control" type="number" ng-model="new_price"></td>
-            <!--            <td><button class="btn btn-success" ng-click="changePrice(p.id, new_price)">Изменить цену</button></td>-->
-            <td>
-                <button class="btn btn-success" ng-click="changePrice(p, new_price)">Изменить цену</button>
-            </td>
+    <div>
+        <h3>Отсортировать товары в каталоге</h3>
+        <form novalidate ng-submit="doSort()">
+            <div class="form-group col-md-6">
+                <p><label><input type="radio" value="INCREASE" ng-model="NewSorted.type"></label> По увеличению цены</p>
+                <p><label><input type="radio" value="DECREASE" ng-model="NewSorted.type"></label> По уменьшению цены</p>
+                <p><label><input type="radio" value="ALPHABET" ng-model="NewSorted.type"></label> По алфавиту</p>
+                <p><label><input type="radio" value="WITHOUT" ng-model="NewSorted.type"></label> Без сортировки</p>
+            </div>
+            <div>
+                <button class="btn btn-primary" type="submit">Отсортировать</button>
+            </div>
+        </form>
+    </div>
 
-            <td>
-                <button class="btn-danger" ng-click="deleteProduct(p.id)">Удалить товар</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h3>Отсортировать товары в каталоге</h3>
-    <form novalidate ng-submit="doSort()">
-        <div class="form-group col-md-6">
-            <p><label><input type="radio" value="INCREASE" ng-model="NewSorted.type"></label> По увеличению цены</p>
-            <p><label><input type="radio" value="DECREASE" ng-model="NewSorted.type"></label> По уменьшению цены</p>
-            <p><label><input type="radio" value="ALPHABET" ng-model="NewSorted.type"></label> По алфавиту</p>
-            <p><label><input type="radio" value="WITHOUT" ng-model="NewSorted.type"></label> Без сортировки</p>
-        </div>
-        <div>
-            <button class="btn btn-primary" type="submit">Отсортировать</button>
-        </div>
-    </form>
-
-    <br/>
-    <h3>Добавить товар в каталог</h3>
-    <form novalidate ng-submit="saveProduct()">
-        <div class="form-group col-md-6">
-            <label>Название</label>
-            <input class="form-control" type="text" ng-model="NewProduct.title">
-        </div>
-        <div class="form-group col-md-6">
-            <label>Цена</label>
-            <input class="form-control" type="number" ng-model="NewProduct.price">
-        </div>
-
-        <!-- Пытаюсь сделать выпадающий список -->
-        <div class="form-group col-md-6">
-            <label for="categorySelect">Категория</label>
-            <select class="form-control" id="categorySelect" ng-model="NewCategory.name">
-                <option ng-repeat="category in Categories" value="{{category.name}}">{{category.name}}</option>
-            </select>
-        </div>
-
-        <div>
-            <button class="btn btn-success" type="submit">Сохранить</button>
-        </div>
-    </form>
+    <div>
+        <br/>
+        <h3>Добавить товар в каталог</h3>
+        <form novalidate ng-submit="saveProduct()">
+            <div class="form-group col-md-6">
+                <label>Название</label>
+                <input class="form-control" type="text" ng-model="NewProduct.title">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Цена</label>
+                <input class="form-control" type="number" ng-model="NewProduct.price">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="categorySelect">Категория</label>
+                <select class="form-control" id="categorySelect" ng-model="NewCategory.name">
+                    <option ng-repeat="category in Categories" value="{{category.name}}">{{category.name}}</option>
+                </select>
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit">Сохранить</button>
+            </div>
+        </form>
+    </div>
 
 </div>
 </body>

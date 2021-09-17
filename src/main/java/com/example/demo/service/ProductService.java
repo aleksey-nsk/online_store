@@ -15,7 +15,7 @@ public interface ProductService {
 
     void deleteById(Integer id);
 
-    List<ProductDto> findSorted(Sorted sorted);
-
     void updateProduct(Integer id, ProductDto newProductDto);
+
+    List<ProductDto> findSorted(Sorted sorted);
 }

@@ -27,15 +27,3 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDtoList;
     }
 }
-
-/*
-@Override
-    public List<ProductDto> findAll() {
-        List<ProductDto> productDtoList = productRepository.findAll()
-                .stream()
-                .map(it -> ProductDto.valueOf(it))
-                .collect(Collectors.toList());
-        log.debug("Список всех товаров из каталога: " + productDtoList);
-        return productDtoList;
-    }
- */

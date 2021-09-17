@@ -4,12 +4,24 @@ import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import lombok.Data;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class ProductDto {
 
     private Integer id;
+
+    @NotEmpty
     private String title;
+
+    @Min(1)
+    @Max(1_000_000_000)
     private Integer price;
+
+    @NotNull
     private Category category;
 
     public ProductDto(Integer id, String title, Integer price, Category category) {
