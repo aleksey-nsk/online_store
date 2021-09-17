@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -104,19 +103,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void changePrice(Integer id, ProductDto productDto) {
-        log.debug("Изменить цену у товара с id: " + id + "; товар: " + productDto);
+    public void updateProduct(Integer id, ProductDto newProductDto) {
+        log.debug("Обновить товар с id: " + id);
 
-        if (productRepository.existsById(id)) {
-            Product productForUpdating = productRepository.getById(id);
-            Integer changedPrice = productDto.getPrice();
-            productForUpdating.setPrice(changedPrice);
-            log.debug("productForUpdating: " + productForUpdating);
-            productRepository.save(productForUpdating);
-            log.debug("productForUpdating: " + productForUpdating);
-        } else {
-            log.error("Нет товара с указанным id: " + id);
-            throw new NoSuchElementException();
-        }
+        Product oldProduct = productRepository.getById(id);
+        Product newProduct = newProductDto.mapToProduct();
+        log.debug("Текущий товар: " + oldProduct);
+        log.debug("Новый товар: " + newProduct);
+
+        productRepository.save(newProduct);
     }
 }

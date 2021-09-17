@@ -17,5 +17,5 @@ public interface ProductService {
 
     List<ProductDto> findSorted(Sorted sorted);
 
-    void changePrice(Integer id, ProductDto productDto);
+    void updateProduct(Integer id, ProductDto newProductDto);
 }

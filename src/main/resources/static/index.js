@@ -58,18 +58,11 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 });
     };
 
-    // $scope.changePrice = function (id, new_price) {
-    $scope.changePrice = function (OldProduct, new_price) {
-        console.log('Функция changePrice()');
-        console.log(new_price);
-        console.log(OldProduct);
-        NewProduct={
-            "id":OldProduct.id,
-            "title":OldProduct.title,
-            "price": new_price
-        };
-        console.log(NewProduct);
-        $http.put(contextPath + '/product/' + OldProduct.id, NewProduct)
+    $scope.changePrice = function (product, new_price) {
+        product.price = new_price;
+        console.log(product)
+
+        $http.put(contextPath + '/product/' + product.id, product)
                 .then(function (resp) {
                     console.log(resp);
                     $scope.fillTable()
