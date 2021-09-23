@@ -8,7 +8,7 @@
 2. Backend реализован как **REST API**, frontend - на **AngularJS**.
 3. Валидация с помощью **spring-boot-starter-validation**.
 4. Можно добавлять новые товары в каталог, выбирать их категорию, менять цену товара, удалять, сортировать:
-![](https://github.com/aleksey-nsk/gb-homework/blob/main/screenshots/01_store_frontend.png)
+![](https://github.com/aleksey-nsk/gb-homework/blob/main/screenshots/01_store_frontend_new.png)
 
 # TODO list:
 - Сделать постраничное отображение длинного списка товаров (пагинация).
