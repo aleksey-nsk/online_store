@@ -8,7 +8,7 @@
 2. Backend реализован как **REST API**, frontend - на **AngularJS**.
 3. Валидация с помощью **spring-boot-starter-validation**.
 4. Можно добавлять новые товары в каталог, выбирать их категорию, менять цену товара, удалять, сортировать:
-![](https://github.com/aleksey-nsk/gb-homework/blob/main/screenshots/01_store_frontend_new.png)
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/01_store_frontend_new.png)
 
 # TODO list:
 - Сделать постраничное отображение длинного списка товаров (пагинация).
@@ -23,7 +23,7 @@
 - Подключить **Travis CI**.
 - Подключить **Codecov**.
 - Реализовать новые сущности, и сделать такие связи:
-![](https://github.com/aleksey-nsk/gb-homework/blob/main/screenshots/02_db_todo.png)
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/02_db_todo.png)
 - Заиспользовать **Spring Security**. Сделать 3 роли: админ, юзер, гость. Только админ должен добавлять/удалять/изменять 
 товары в каталоге магазина. Юзеры могут регистрироваться. Незарегистрированный гость не может формировать заказы
 (то есть добавлять товары в **корзину**), может только просматривать список товаров в каталоге.
