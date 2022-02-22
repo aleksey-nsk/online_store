@@ -1,6 +1,17 @@
 # Info:
-1. Проект **Интернет-Магазин**
-2. Написан на **Java + Spring Boot + AngularJS**
+
+1. Проект **Интернет Магазин**.
+
+2. Использована БД **Postgres** в контейнере **Docker**.
+Настройки контейнера указываем в файле **docker-compose.yaml**.
+Настройки подключения к БД прописываем в файле src/main/resources/**application-dev.yaml**.
+Для автоматизации внесения обновлений в структуру БД используем **Liquibase**.
+
+Добавил 2 новые миграции
+ChangeSet db/changelog/02_table_categories.xml::Create and fill table categories::Aleksey Zhdanov ran successfully in 9ms
+ChangeSet db/changelog/03_add_fk_to_products.xml::Add foreign key to table products::Aleksey Zhdanov ran successfully in 8ms
+
+
 
 # Реализованный функционал:
 1. В БД две таблицы: **products** (товары) и **categories** (категории). Для работы с данными используется 

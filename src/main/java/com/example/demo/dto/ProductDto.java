@@ -1,45 +1,52 @@
 package com.example.demo.dto;
 
-//import com.example.demo.entity.Category;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-//import javax.validation.constraints.Max;
-//import javax.validation.constraints.Min;
-//import javax.validation.constraints.NotEmpty;
-//import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
 
-    private Integer id;
+    private Long id;
 
-//    @NotEmpty
+    //    @NotEmpty
     private String title;
 
-//    @Min(1)
+    //    @Min(1)
 //    @Max(1_000_000_000)
-    private Integer price;
+    private BigDecimal price;
 
 //    @NotNull
-//    private Category category;
+    private Category category;
 
-    public ProductDto(Integer id, String title, Integer price /*, Category category */ ) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
+//    public ProductDto(Integer id, String title, Integer price, Category category) {
+//        this.id = id;
+//        this.title = title;
+//        this.price = price;
 //        this.category = category;
-    }
+//    }
 
     public static ProductDto valueOf(Product product) {
         return new ProductDto(
                 product.getId(),
                 product.getTitle(),
-                product.getPrice()
+                product.getPrice(),
+                product.getCategory()
         );
     }
 
     public Product mapToProduct() {
-        return new Product(id, title, price /* , category */ );
+        return new Product(id, title, price, category);
     }
+
+//    public Product mapToProduct() {
+//        return new Product(id, title, price, category);
+//    }
+
 }

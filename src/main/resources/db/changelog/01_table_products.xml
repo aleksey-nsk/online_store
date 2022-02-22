@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet id="Create and fill table products" author="Aleksey Zhdanov">
+        <createTable tableName="products" remarks="Товары">
+            <column name="id" type="integer" remarks="Идентификатор товара" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="products_pk"/>
+            </column>
+            <column name="title" type="varchar(50)" remarks="Название товара"/>
+            <column name="price" type="numeric"/>
+        </createTable>
+        <insert tableName="products">
+            <column name="title" value="Пылесос"/>
+            <column name="price" value="100"/>
+        </insert>
+        <insert tableName="products">
+            <column name="title" value="Ноутбук"/>
+            <column name="price" value="250"/>
+        </insert>
+        <insert tableName="products">
+            <column name="title" value="Монитор"/>
+            <column name="price" value="200"/>
+        </insert>
+        <insert tableName="products">
+            <column name="title" value="Удочка"/>
+            <column name="price" value="50"/>
+        </insert>
+        <insert tableName="products">
+            <column name="title" value="Компас"/>
+            <column name="price" value="45"/>
+        </insert>
+        <insert tableName="products">
+            <column name="title" value="Ручка"/>
+            <column name="price" value="20"/>
+        </insert>
+        <insert tableName="products">
+            <column name="title" value="Карандаш"/>
+            <column name="price" value="15"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

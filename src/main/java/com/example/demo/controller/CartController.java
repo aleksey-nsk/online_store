@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.CartDto;
 import com.example.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,17 +18,20 @@ public class CartController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public CartDto find(){
         return cartService.find();
     }
 
     @PutMapping
-    public void add(@RequestParam Integer productId){
+    @ResponseStatus(HttpStatus.OK)
+    public void add(@RequestParam("productId") Long productId){
         cartService.add(productId);
     }
 
     @DeleteMapping
-    public void clear(){
-        cartService.deleteAll();
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(){
+        cartService.delete();
     }
 }

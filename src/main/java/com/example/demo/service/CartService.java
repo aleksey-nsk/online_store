@@ -2,11 +2,28 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CartDto;
 
+/**
+ * @author Aleksey Zhdanov
+ * @version 1
+ */
 public interface CartService {
 
+    /**
+     * <p>Возвращает корзину со всеми товарами</p>
+     *
+     * @return Корзина
+     */
     CartDto find();
 
-    void add(Integer productId);
+    /**
+     * <p>Добавляет товар в корзину</p>
+     *
+     * @param productId Идентификатор товара
+     */
+    void add(Long productId);
 
-    void deleteAll();
+    /**
+     * <p>Очищает корзину</p>
+     */
+    void delete();
 }

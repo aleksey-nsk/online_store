@@ -1,0 +1,7 @@
+databaseChangeLog:
+    -   include:
+            file: db/changelog/01_table_products.xml
+    -   include:
+            file: db/changelog/02_table_categories.xml
+    -   include:
+            file: db/changelog/03_add_fk_to_products.xml
