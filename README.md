@@ -25,3 +25,4 @@
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/02_db_todo.png)  
 - Заиспользовать **Spring Security**.
 - Все денежные поля сделать типа **BigDecimal**.
+
