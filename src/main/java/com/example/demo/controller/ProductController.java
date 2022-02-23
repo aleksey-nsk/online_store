@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/v1/product")
 @Api(description = "Контроллер для товаров")
@@ -47,16 +49,14 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Добавить новый товар в каталог")
-    // public ProductDto save(@RequestBody @Valid ProductDto productDto) {
-    public ProductDto save(@RequestBody ProductDto productDto) {
+    public ProductDto save(@RequestBody @Valid ProductDto productDto) {
         return productService.save(productDto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Обновить товар")
-    // public void update(@PathVariable Integer id, @RequestBody @Valid ProductDto newProductDto) {
-    public void update(@PathVariable("id") Long id, @RequestBody ProductDto productDto) {
+    public void update(@PathVariable("id") Long id, @RequestBody @Valid ProductDto productDto) {
         productService.update(id, productDto);
     }
 

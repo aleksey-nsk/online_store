@@ -122,6 +122,10 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
         console.log("Method saveProduct(), url: " + url);
 
         $scope.NewProduct.category = $scope.NewCategory;
+        console.log($scope.NewProduct);
+        console.log("Название: '" + $scope.NewProduct.title + "'"
+                + ", категория: '" + ($scope.NewProduct.category ? $scope.NewProduct.category.name : null) + "'"
+                + ", цена: " + $scope.NewProduct.price);
 
         $http.post(url, $scope.NewProduct)
                 .then(function (response) {

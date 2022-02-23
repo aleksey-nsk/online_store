@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Data
@@ -15,14 +19,15 @@ public class ProductDto {
 
     private Long id;
 
-    // @NotEmpty
+    @NotEmpty
     private String title;
 
-    // @Min(1)
-    // @Max(1_000_000_000)
+    @NotNull
+    @Min(1)
+    @Max(1_000_000_000)
     private BigDecimal price;
 
-    // @NotNull
+    @NotNull
     private Category category;
 
     public static ProductDto valueOf(Product product) {

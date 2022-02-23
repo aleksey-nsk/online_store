@@ -35,7 +35,8 @@ Spring Data JPA определяет интерфейс **Specification** для
 7. Корзина реализована как **сессионный бин**:  
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/01_frontend.png)  
 
+8. Реализовал валидацию данных с помощью **spring-boot-starter-validation**.
+
 # TODO list:
 - Написать тесты (**интеграционные** и **unit**).
-- Валидация с помощью **spring-boot-starter-validation**.
 - Заиспользовать **Spring Security**.
