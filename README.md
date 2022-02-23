@@ -40,3 +40,4 @@ Spring Data JPA определяет интерфейс **Specification** для
 # TODO list:
 - Написать тесты (**интеграционные** и **unit**).
 - Заиспользовать **Spring Security**.
+
