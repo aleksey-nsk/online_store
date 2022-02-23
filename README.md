@@ -32,9 +32,10 @@ Spring Data JPA определяет интерфейс **Specification** для
 прямом использовании **JPA Criteria API**, сложность и гибкость спецификаций может быть сколь угодно высокой:  
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/04_product_specification.png)  
 
-7. 
+7. Корзина реализована как **сессионный бин**:  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/01_frontend.png)  
 
 # TODO list:
-- Валидация с помощью **spring-boot-starter-validation**.
 - Написать тесты (**интеграционные** и **unit**).
+- Валидация с помощью **spring-boot-starter-validation**.
 - Заиспользовать **Spring Security**.
