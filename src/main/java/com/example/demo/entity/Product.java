@@ -28,4 +28,10 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public Product(String title, BigDecimal price, Category category) {
+        this.title = title;
+        this.price = price;
+        this.category = category;
+    }
 }
