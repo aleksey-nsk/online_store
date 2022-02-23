@@ -14,16 +14,21 @@ import java.util.stream.Collectors;
 @Log4j2
 public class CategoryServiceImpl implements CategoryService {
 
+    private final CategoryRepository categoryRepository;
+
     @Autowired
-    private CategoryRepository categoryRepository;
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
 
     @Override
     public List<CategoryDto> findAll() {
-        List<CategoryDto> categoryDtoList = categoryRepository.findAll()
+        List<CategoryDto> list = categoryRepository.findAll()
                 .stream()
                 .map(it -> CategoryDto.valueOf(it))
                 .collect(Collectors.toList());
-        log.debug("Список всех категорий: " + categoryDtoList);
-        return categoryDtoList;
+
+        log.debug("Список всех категорий: " + list);
+        return list;
     }
 }

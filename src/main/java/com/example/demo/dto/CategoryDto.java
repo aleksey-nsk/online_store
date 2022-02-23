@@ -1,18 +1,17 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.Category;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CategoryDto {
 
-    private Integer id;
+    private Long id;
     private String name;
-
-    public CategoryDto(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     public static CategoryDto valueOf(Category category) {
         return new CategoryDto(

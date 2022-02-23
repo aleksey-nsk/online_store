@@ -2,6 +2,7 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,23 +10,21 @@ import java.util.List;
 @Entity
 @Table(name = "categories")
 @Data
+@NoArgsConstructor
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
 
-    public Category() {
-    }
-
-    public Category(Integer id, String name) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }
