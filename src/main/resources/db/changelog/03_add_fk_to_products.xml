@@ -15,31 +15,11 @@
                                  constraintName="products_categories_fk"/>
         <update tableName="products">
             <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Бытовая техника')"/>
-            <where>title='Пылесос'</where>
+            <where>title='Утюг'</where>
         </update>
         <update tableName="products">
             <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Компьютеры')"/>
             <where>title='Ноутбук'</where>
-        </update>
-        <update tableName="products">
-            <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Компьютеры')"/>
-            <where>title='Монитор'</where>
-        </update>
-        <update tableName="products">
-            <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Туризм')"/>
-            <where>title='Удочка'</where>
-        </update>
-        <update tableName="products">
-            <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Туризм')"/>
-            <where>title='Компас'</where>
-        </update>
-        <update tableName="products">
-            <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Канцтовары')"/>
-            <where>title='Ручка'</where>
-        </update>
-        <update tableName="products">
-            <column name="category_id" valueComputed="(SELECT id FROM categories WHERE name = 'Канцтовары')"/>
-            <where>title='Карандаш'</where>
         </update>
     </changeSet>
 

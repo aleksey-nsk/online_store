@@ -2,37 +2,39 @@
 
 1. Проект **Интернет Магазин**.
 
-2. Использована БД **Postgres** в контейнере **Docker**.
-Настройки контейнера указываем в файле **docker-compose.yaml**.
-Настройки подключения к БД прописываем в файле src/main/resources/**application-dev.yaml**.
-Для автоматизации внесения обновлений в структуру БД используем **Liquibase**.
+2. Бекэнд реализован в виде **Spring Boot REST API**.
 
-Добавил 2 новые миграции
-ChangeSet db/changelog/02_table_categories.xml::Create and fill table categories::Aleksey Zhdanov ran successfully in 9ms
-ChangeSet db/changelog/03_add_fk_to_products.xml::Add foreign key to table products::Aleksey Zhdanov ran successfully in 8ms
+3. Используется БД **PostgreSQL** в контейнере **Docker**. Для миграций используется **Liquibase**.
 
+4. Фронтенд реализован на **AngularJS**. Запущенное приложение:    
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/01_frontend.png)  
 
+5. Документация к API генерируется с помощью **Swagger**. Для просмотра документации
+открыть адрес http://localhost:8081/swagger-ui/index.html.
 
-# Реализованный функционал:
-1. В БД две таблицы: **products** (товары) и **categories** (категории). Для работы с данными используется 
-**Spring Data JPA**, in-memory database **H2**. Для миграции БД используется **Flyway**.
-2. Backend реализован как **REST API**, frontend - на **AngularJS**.
-3. Валидация с помощью **spring-boot-starter-validation**.
-4. Можно добавлять новые товары в каталог, выбирать их категорию, менять цену товара, удалять, сортировать:  
-![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/01_store_frontend_new.png)  
+6. Реализована **пагинация**, а также **фильтрация** товаров по названию и ценам.
+
+**JPA Criteria API** - это мощный механизм по генерации **динамических**
+и типобезопасных (при использовании Metamodel) запросов, который напрямую поддерживается в Spring Data JPA.
+
+Spring Data JPA определяет интерфейс **Specification** для создания таких **предикатов Criteria API**,
+которые можно было бы использовать повторно. Чтобы использовать **Спецификацию** с репозиториями, необходимо
+чтобы репозиторий имел в списке предков интерфейс **JpaSpecificationExecutor**:  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/02_product_repo.png)  
+
+Далее на сервисном слое надо создать спецификацию
+и передать её в нужный метод интерфейса JpaSpecificationExecutor:  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/03_product_service.png)  
+
+Для фильтрации по нескольким условиям предназначен **Specification**. Можно реализовывать
+интерфейс Specification явно, но чаще используются вспомогательные классы, которые группируют различные
+реализации Specification и предоставляют удобные методы для обращения к ним. Поскольку речь идёт о
+прямом использовании **JPA Criteria API**, сложность и гибкость спецификаций может быть сколь угодно высокой:  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/04_product_specification.png)  
+
+7. 
 
 # TODO list:
-- Сделать постраничное отображение длинного списка товаров (пагинация).
-- Реализовать генерацию Api Documentation с помощью **Swagger**.
-- Вместо БД **H2** заиспользовать PostgreSQL в контейнере **Docker**.
-- Добавить **интеграционные тесты**.
-- Добавить **юнит-тесты**.
-- Для приложения и тестирования должны быть разные БД.
-- **Развернуть приложение на Heroku !!!**
-- **Развернуть приложение на AWS !!!**
-- Сделать валидацию полей.
-- Приделать **ExceptionHandler**.
-- Реализовать новые сущности, и сделать такие связи (**это не буду делать**):  
-![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/02_db_todo.png)  
+- Валидация с помощью **spring-boot-starter-validation**.
+- Написать тесты (**интеграционные** и **unit**).
 - Заиспользовать **Spring Security**.
-- Все денежные поля сделать типа **BigDecimal**.

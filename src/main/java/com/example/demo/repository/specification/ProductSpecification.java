@@ -4,13 +4,17 @@ import com.example.demo.entity.Product;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.MultiValueMap;
 
-// Для фильтрации по нескольким условиям предназначен Specification.
-//
-// Можно реализовывать интерфейс Specification явно, но чаще используются вспомогательные классы, которые группируют различные реализации Specification
-// и предоставляют удобные методы для обращения к ним:
+/**
+ * <p>Для фильтрации по нескольким условиям предназначен <strong>Specification</strong>.</p>
+ *
+ * <p>Можно реализовывать интерфейс Specification явно, но чаще используются вспомогательные классы,
+ * которые группируют различные реализации Specification и предоставляют удобные методы для обращения к ним.
+ * Поскольку речь идёт о прямом использовании <strong>JPA Criteria API</strong>, сложность и гибкость
+ * спецификаций может быть сколь угодно высокой.</p>
+ */
 public class ProductSpecification {
 
-    // Передаём значение параметра. Далее с помощью criteriaBuilder создаём Спецификацию
+    // Передаём значение параметра, и далее с помощью criteriaBuilder создаём Спецификацию
     private static Specification<Product> priceGreaterOrEqualsThan(int minPrice) {
         Specification<Product> spec = (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("price"), minPrice);
         return spec;

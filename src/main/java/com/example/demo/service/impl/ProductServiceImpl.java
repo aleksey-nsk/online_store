@@ -59,16 +59,6 @@ public class ProductServiceImpl implements ProductService {
         return productDto;
     }
 
-//    @Override
-//    public void save(ProductDto productDto) {
-//        log.debug("productDto: " + productDto);
-//
-//        Product product = productDto.mapToProduct();
-//
-//        productRepository.save(product);
-//        log.debug("В БД сохранён новый товар: " + product);
-//    }
-
     @Override
     public ProductDto save(ProductDto productDto) {
         String name = productDto.getCategory().getName();
@@ -77,26 +67,15 @@ public class ProductServiceImpl implements ProductService {
         Product product = productDto.mapToProduct();
         product.setCategory(category);
         ProductDto saved = ProductDto.valueOf(productRepository.save(product));
-        log.debug("В БД сохранён новый товар: " + saved);
 
+        log.debug("В БД сохранён новый товар: " + saved);
         return saved;
     }
-
-//    @Override
-//    public void updateProduct(Integer id, ProductDto newProductDto) {
-//        log.debug("Обновить товар с id: " + id);
-//
-//        Product oldProduct = productRepository.getById(id);
-//        Product newProduct = newProductDto.mapToProduct();
-//        log.debug("Текущий товар: " + oldProduct);
-//        log.debug("Новый товар: " + newProduct);
-//
-//        productRepository.save(newProduct);
-//    }
 
     @Override
     public void update(Long id, ProductDto productDto) {
         log.debug("Обновить товар с id: " + id);
+
         Product currentProduct = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         log.debug("  текущий товар: " + currentProduct);
 
@@ -106,54 +85,10 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(forUpdate);
     }
 
-//    @Override
-//    public void deleteById(Integer id) {
-//        log.debug("Удалить из БД товар с идентификатором: " + id);
-//        productRepository.deleteById(id);
-//    }
-
     @Override
     public void delete(Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
         log.debug("Удалить товар: " + product);
         productRepository.deleteById(id);
     }
-
-//    @Override
-//    public List<ProductDto> findSorted(Sorted sorted) {
-//        SortedType type = sorted.getType();
-//        log.debug("Тип сортировки: " + type);
-//
-//        Sort.Direction direction;
-//        String property;
-//
-//        switch (type) {
-//            case INCREASE:
-//                direction = Sort.Direction.ASC;
-//                property = "price";
-//                break;
-//            case DECREASE:
-//                direction = Sort.Direction.DESC;
-//                property = "price";
-//                break;
-//            case ALPHABET:
-//                direction = Sort.Direction.ASC;
-//                property = "title";
-//                break;
-//            case WITHOUT:
-//            default:
-//                direction = Sort.Direction.ASC;
-//                property = "id";
-//                break;
-//        }
-//
-//        List<ProductDto> productDtoList = productRepository.findAll(Sort.by(direction, property))
-//                .stream()
-//                .map(it -> ProductDto.valueOf(it))
-//                .collect(Collectors.toList());
-//
-//        log.debug("Список отсортированных товаров: " + productDtoList);
-//        return productDtoList;
-//    }
-
 }

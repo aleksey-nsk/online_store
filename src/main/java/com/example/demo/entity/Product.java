@@ -23,7 +23,7 @@ public class Product {
     private String title;
 
     @Column(name = "price")
-    private BigDecimal price; // всегда использовать BigDecimal для работы с деньгами!
+    private BigDecimal price;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

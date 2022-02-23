@@ -4,13 +4,14 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     console.log("contextPath: " + contextPath);
 
     $scope.logout = function () {
-        $http.get('/logout');
+        const url = '/logout';
+        console.log("Method logout(), url: " + url);
+        $http.get(url);
     };
 
     $scope.fillTable = function (pageIndex = 1) {
         const url = contextPath + '/product';
-        console.log("fillTable() url: " + url);
-        // console.log(pageIndex);
+        console.log("Method fillTable(), url: " + url);
 
         $http({
             url: url,
@@ -22,11 +23,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
                 pageIndex: pageIndex
             }
         }).then(function (response) {
-            // console.log("response: " + response);
-            // console.log(response);
-
             $scope.ProductPage = response.data;
-            // console.log($scope.ProductPage);
 
             let minPageIndex = pageIndex - 2;
             if (minPageIndex < 1) {
@@ -39,26 +36,22 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             }
 
             $scope.PaginationArray = $scope.generatePagesIndexes(minPageIndex, maxPageIndex);
-            // console.log($scope.PaginationArray);
-
             $scope.getCategories();
         });
     };
 
     $scope.generatePagesIndexes = function (startPage, endPage) {
+        console.log("Method generatePagesIndexes(), startPage=" + startPage + ", endPage=" + endPage);
         let arr = [];
         for (let i = startPage; i <= endPage; i++) {
             arr.push(i);
         }
-        // console.log(arr);
-        // console.log("arr: " + arr);
         return arr;
     };
 
     $scope.getCategories = function () {
         const url = contextPath + '/category';
-        console.log("getCategories() url: " + url);
-
+        console.log("Method getCategories(), url: " + url);
         $http.get(url)
                 .then(function (resp) {
                     $scope.Categories = resp.data;
@@ -67,46 +60,48 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.showCart = function () {
         const url = contextPath + '/cart';
-        console.log("showCart() url: " + url);
-        // console.log(url);
-
+        console.log("Method showCart(), url: " + url);
         $http({
             url: url,
             method: 'GET'
         }).then(function (response) {
             $scope.Cart = response.data;
-            // console.log($scope.Cart);
         });
     };
 
-    $scope.changePrice = function (product, newPrice) {
-        console.log(product);
-        console.log(newPrice);
+    $scope.clearCart = function () {
+        const url = contextPath + '/cart';
+        console.log("Method clearCart(), url: " + url);
+        $http.delete(url)
+                .then(function (response) {
+                    $scope.showCart();
+                });
+    };
 
-        // Создадим новый пустой объект
-        // и скопируем все свойства product в него
-        // Затем изменим цену
+    $scope.changePrice = function (product, newPrice) {
+        const url = contextPath + '/product/' + product.id;
+        console.log("Method changePrice(), url: " + url + ", newPrice=" + newPrice);
+
+        // Создать новый пустой объект
         let newProduct = {};
+
+        // Скопировать все свойства product в новый объект
         for (let key in product) {
             newProduct[key] = product[key]
         }
-        newProduct.price = newPrice;
-        console.log(newProduct);
 
-        const url = contextPath + '/product/' + product.id;
-        console.log("changePrice() url: " + url);
+        // Изменить цену
+        newProduct.price = newPrice;
 
         $http.put(url, newProduct)
                 .then(function (resp) {
-                    console.log(resp);
                     $scope.fillTable()
                 });
     };
 
     $scope.addToCart = function (productId) {
         const url = contextPath + '/cart?productId=' + productId;
-        console.log("addToCart() url: " + url);
-
+        console.log("Method addToCart(), url: " + url);
         $http.put(url)
                 .then(function (response) {
                     $scope.showCart();
@@ -115,7 +110,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
 
     $scope.deleteProduct = function (productId) {
         const url = contextPath + '/product/' + productId;
-        console.log(url);
+        console.log("Method deleteProduct(), url: " + url);
         $http.delete(url)
                 .then(function (response) {
                     $scope.fillTable();
@@ -123,29 +118,16 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
     };
 
     $scope.saveProduct = function () {
-        // console.log($scope.NewCategory);
+        const url = contextPath + '/product';
+        console.log("Method saveProduct(), url: " + url);
 
         $scope.NewProduct.category = $scope.NewCategory;
-        // console.log($scope.NewProduct);
-
-        const url = contextPath + '/product';
-        console.log(url);
 
         $http.post(url, $scope.NewProduct)
                 .then(function (response) {
-                    // console.log(response)
                     $scope.NewProduct = null;
                     $scope.NewCategory = null;
                     $scope.fillTable();
-                });
-    };
-
-    $scope.clearCart = function () {
-        const url = contextPath + '/cart';
-        console.log(url);
-        $http.delete(url)
-                .then(function (response) {
-                    $scope.showCart();
                 });
     };
 

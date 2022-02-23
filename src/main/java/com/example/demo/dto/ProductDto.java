@@ -15,22 +15,15 @@ public class ProductDto {
 
     private Long id;
 
-    //    @NotEmpty
+    // @NotEmpty
     private String title;
 
-    //    @Min(1)
-//    @Max(1_000_000_000)
+    // @Min(1)
+    // @Max(1_000_000_000)
     private BigDecimal price;
 
-//    @NotNull
+    // @NotNull
     private Category category;
-
-//    public ProductDto(Integer id, String title, Integer price, Category category) {
-//        this.id = id;
-//        this.title = title;
-//        this.price = price;
-//        this.category = category;
-//    }
 
     public static ProductDto valueOf(Product product) {
         return new ProductDto(
@@ -44,9 +37,4 @@ public class ProductDto {
     public Product mapToProduct() {
         return new Product(id, title, price, category);
     }
-
-//    public Product mapToProduct() {
-//        return new Product(id, title, price, category);
-//    }
-
 }

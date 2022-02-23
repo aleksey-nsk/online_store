@@ -26,13 +26,19 @@ public interface ProductService {
      */
     ProductDto findById(Long id);
 
+    /**
+     * <p>Добавляет новый товар в каталог</p>
+     *
+     * @param productDto Данные для добавления товара
+     * @return Сохранённый в БД товар
+     */
     ProductDto save(ProductDto productDto);
 
     /**
      * <p>Обновляет товар</p>
      *
      * @param id         Идентификатор товара
-     * @param productDto Данные товара для обновления
+     * @param productDto Данные для обновления товара
      */
     void update(Long id, ProductDto productDto);
 
@@ -42,13 +48,4 @@ public interface ProductService {
      * @param id Идентификатор товара
      */
     void delete(Long id);
-
-//    void save(ProductDto productDto);
-//
-//    void deleteById(Integer id);
-//
-//    void updateProduct(Integer id, ProductDto newProductDto);
-//
-//    List<ProductDto> findSorted(Sorted sorted);
-
 }

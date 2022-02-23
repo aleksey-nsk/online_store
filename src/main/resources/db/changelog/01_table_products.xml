@@ -13,32 +13,12 @@
             <column name="price" type="numeric"/>
         </createTable>
         <insert tableName="products">
-            <column name="title" value="Пылесос"/>
+            <column name="title" value="Утюг"/>
             <column name="price" value="100"/>
         </insert>
         <insert tableName="products">
             <column name="title" value="Ноутбук"/>
             <column name="price" value="250"/>
-        </insert>
-        <insert tableName="products">
-            <column name="title" value="Монитор"/>
-            <column name="price" value="200"/>
-        </insert>
-        <insert tableName="products">
-            <column name="title" value="Удочка"/>
-            <column name="price" value="50"/>
-        </insert>
-        <insert tableName="products">
-            <column name="title" value="Компас"/>
-            <column name="price" value="45"/>
-        </insert>
-        <insert tableName="products">
-            <column name="title" value="Ручка"/>
-            <column name="price" value="20"/>
-        </insert>
-        <insert tableName="products">
-            <column name="title" value="Карандаш"/>
-            <column name="price" value="15"/>
         </insert>
     </changeSet>
 

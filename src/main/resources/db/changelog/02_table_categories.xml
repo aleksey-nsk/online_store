@@ -24,6 +24,9 @@
             <column name="name" value="Туризм"/>
         </insert>
         <insert tableName="categories">
+            <column name="name" value="Продукты питания"/>
+        </insert>
+        <insert tableName="categories">
             <column name="name" value="Прочее"/>
         </insert>
     </changeSet>

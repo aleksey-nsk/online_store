@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.CategoryDto;
 import com.example.demo.service.CategoryService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/category")
+@Api(description = "Контроллер для категорий товаров")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -24,6 +27,7 @@ public class CategoryController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Получить все категории товаров")
     public List<CategoryDto> findAll() {
         return categoryService.findAll();
     }
