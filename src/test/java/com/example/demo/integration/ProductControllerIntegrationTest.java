@@ -250,10 +250,75 @@ public class ProductControllerIntegrationTest {
         assertThat(categoryRepository.findAll().size()).isEqualTo(1);
 
         Product updated = productRepository.findById(id).get();
-
         assertThat(updated.getTitle()).isEqualTo(saved.getTitle());
         assertThat(updated.getPrice().compareTo(newPrice)).isEqualTo(0);
         assertThat(updated.getCategory().getId()).isEqualTo(saved.getCategory().getId());
         assertThat(updated.getCategory().getName()).isEqualTo(saved.getCategory().getName());
+    }
+
+    @Test
+    @DisplayName("Неуспешное обновление цены: товар не найден")
+    public void updateFail() throws Exception {
+        Category category = saveCategoryInDB();
+        Product saved = saveProductInDB(category);
+
+        Long nonExistentProductId = saved.getId() + 1L;
+        BigDecimal newPrice = BigDecimal.valueOf(50L);
+        ProductDto newProduct = new ProductDto(
+                nonExistentProductId,
+                saved.getTitle(),
+                newPrice,
+                saved.getCategory()
+        );
+        log.debug("newProduct: " + newProduct);
+
+        String newProductAsJson = objectMapper.writeValueAsString(newProduct);
+        log.debug("newProductAsJson: " + newProductAsJson);
+
+        mockMvc.perform(put(BASE_URL + "/" + nonExistentProductId).content(newProductAsJson).contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+        assertThat(productRepository.findAll().size()).isEqualTo(1);
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
+
+        Product notUpdated = productRepository.findById(saved.getId()).get();
+        assertThat(notUpdated.getTitle()).isEqualTo(saved.getTitle());
+        assertThat(notUpdated.getPrice().compareTo(saved.getPrice())).isEqualTo(0);
+        assertThat(notUpdated.getCategory().getId()).isEqualTo(saved.getCategory().getId());
+        assertThat(notUpdated.getCategory().getName()).isEqualTo(saved.getCategory().getName());
+    }
+
+    @Test
+    @DisplayName("Успешное удаление товара")
+    public void deleteSuccess() throws Exception {
+        Long id = saveProductInDB(saveCategoryInDB()).getId();
+
+        assertThat(productRepository.findAll().size()).isEqualTo(1);
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
+
+        mockMvc.perform(delete(BASE_URL + "/" + id))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        assertThat(productRepository.findAll().size()).isEqualTo(0);
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Товар для удаления не найден")
+    public void deleteFail() throws Exception {
+        Product saved = saveProductInDB(saveCategoryInDB());
+        Long nonExistentProductId = saved.getId() + 1L;
+
+        assertThat(productRepository.findAll().size()).isEqualTo(1);
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
+
+        mockMvc.perform(delete(BASE_URL + "/" + nonExistentProductId))
+                .andDo(print())
+                .andExpect(status().isNotFound());
+
+        assertThat(productRepository.findAll().size()).isEqualTo(1);
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
     }
 }
