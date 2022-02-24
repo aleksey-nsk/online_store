@@ -203,8 +203,30 @@ public class ProductControllerIntegrationTest {
     }
 
     @Test
+    @DisplayName("Товар в каталог не добавлен (дубликат по названию)")
+    public void saveFailDuplicate() throws Exception {
+        Category category = saveCategoryInDB();
+        Product product = saveProductInDB(category);
+
+        ProductDto productDto = ProductDto.valueOf(createProduct(category));
+        productDto.setTitle(product.getTitle());
+        productDto.getCategory().setId(null);
+        log.debug("productDto: " + productDto);
+
+        String productDtoAsJson = objectMapper.writeValueAsString(productDto);
+        log.debug("productDtoAsJson: " + productDtoAsJson);
+
+        mockMvc.perform(post(BASE_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+
+        assertThat(productRepository.findAll().size()).isEqualTo(1);
+        assertThat(categoryRepository.findAll().size()).isEqualTo(1);
+    }
+
+    @Test
     @DisplayName("Товар в каталог не добавлен (не найдена категория товара)")
-    public void saveFail() throws Exception {
+    public void saveFailCategoryNotFound() throws Exception {
         Category category = saveCategoryInDB();
         ProductDto productDto = ProductDto.valueOf(createProduct(category));
 

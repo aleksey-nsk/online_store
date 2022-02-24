@@ -4,6 +4,7 @@ import com.example.demo.dto.ProductDto;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import com.example.demo.exception.CategoryNotFoundException;
+import com.example.demo.exception.ProductDuplicateException;
 import com.example.demo.exception.ProductNotFoundException;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
@@ -130,8 +131,40 @@ public class ProductServiceUnitTest {
     }
 
     @Test
+    @DisplayName("Товар в каталог не добавлен (дубликат по названию)")
+    public void saveFailDuplicate() {
+        // С айдишником
+        Category savedCategory = createCategory(4L);
+        Product savedProduct = createProduct(21L, savedCategory);
+
+        // Без айдишника
+        Category category = new Category(savedCategory.getName());
+        log.debug("category: " + category);
+
+        // Без айдишника
+        ProductDto productDto = new ProductDto(
+                savedProduct.getTitle(),
+                BigDecimal.valueOf(77L),
+                category
+        );
+        log.debug("productDto: " + productDto);
+
+        Mockito.doReturn(new Product())
+                .when(productRepository).findByTitle(productDto.getTitle());
+
+        try {
+            productService.save(productDto);
+            throw new RuntimeException("Ожидаемое исключение не было выброшено");
+        } catch (ProductDuplicateException e) {
+            log.debug(e.getMessage());
+            assertThat(e.getMessage()).contains(productDto.getTitle());
+            assertThat(e.getMessage()).isEqualTo("В БД уже есть товар с названием: '" + productDto.getTitle() + "'");
+        }
+    }
+
+    @Test
     @DisplayName("Товар в каталог не добавлен (не найдена категория товара)")
-    public void saveFail() {
+    public void saveFailCategoryNotFound() {
         // С айдишником
         Category savedCategory = createCategory(4L);
         Product savedProduct = createProduct(21L, savedCategory);

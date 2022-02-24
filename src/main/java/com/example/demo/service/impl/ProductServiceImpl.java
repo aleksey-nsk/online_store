@@ -4,6 +4,7 @@ import com.example.demo.dto.ProductDto;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import com.example.demo.exception.CategoryNotFoundException;
+import com.example.demo.exception.ProductDuplicateException;
 import com.example.demo.exception.ProductNotFoundException;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
@@ -63,6 +64,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto save(ProductDto productDto) {
         log.debug("Сохранить новый товар в БД");
         log.debug("  productDto: " + productDto);
+
+        String title = productDto.getTitle();
+        if (productRepository.findByTitle(title) != null) {
+            throw new ProductDuplicateException(title);
+        }
 
         String name = productDto.getCategory().getName();
         Category category = categoryRepository.findByName(name).orElseThrow(() -> new CategoryNotFoundException(name));

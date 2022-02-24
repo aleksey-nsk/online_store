@@ -5,6 +5,7 @@ import com.example.demo.dto.ProductDto;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import com.example.demo.exception.CategoryNotFoundException;
+import com.example.demo.exception.ProductDuplicateException;
 import com.example.demo.exception.ProductNotFoundException;
 import com.example.demo.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -125,8 +126,32 @@ public class ProductControllerUnitTest {
     }
 
     @Test
+    @DisplayName("Товар в каталог не добавлен (дубликат по названию)")
+    public void saveFailDuplicate() throws Exception {
+        Category savedCategory = createCategory(1L);
+        ProductDto savedProductDto = ProductDto.valueOf(createProduct(2L, savedCategory));
+
+        ProductDto productDto = new ProductDto(
+                savedProductDto.getTitle(),
+                BigDecimal.valueOf(15L),
+                new Category(savedCategory.getName())
+        );
+        log.debug("productDto: " + productDto);
+
+        String productDtoAsJson = objectMapper.writeValueAsString(productDto);
+        log.debug("productDtoAsJson: " + productDtoAsJson);
+
+        Mockito.doThrow(new ProductDuplicateException(productDto.getTitle()))
+                .when(productService).save(productDto);
+
+        mockMvc.perform(post(BASE_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     @DisplayName("Товар в каталог не добавлен (не найдена категория товара)")
-    public void saveFail() throws Exception {
+    public void saveFailCategoryNotFound() throws Exception {
         Category savedCategory = createCategory(1L);
         ProductDto savedProductDto = ProductDto.valueOf(createProduct(2L, savedCategory));
 
