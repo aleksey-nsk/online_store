@@ -3,22 +3,12 @@ package com.example.demo.integration;
 import com.example.demo.dto.ProductDto;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
-import com.example.demo.repository.CategoryRepository;
-import com.example.demo.repository.ProductRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang.RandomStringUtils;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -26,62 +16,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
 @Log4j2
 @ActiveProfiles("test")
-public class ProductControllerIntegrationTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private ProductRepository productRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    private static final String BASE_URL = "/api/v1/product";
-
-    @AfterEach
-    void tearDown() {
-        productRepository.deleteAll();
-        categoryRepository.deleteAll();
-    }
-
-    private Category saveCategoryInDB() {
-        String name = RandomStringUtils.randomAlphabetic(5);
-
-        Category category = new Category(name);
-        Category savedCategory = categoryRepository.save(category);
-        log.debug("savedCategory: " + savedCategory);
-
-        return savedCategory;
-    }
-
-    private Product saveProductInDB(Category category) {
-        String title = RandomStringUtils.randomAlphabetic(10);
-        BigDecimal price = BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(10L, 1_000L));
-
-        Product product = new Product(title, price, category);
-        Product savedProduct = productRepository.save(product);
-        log.debug("savedProduct: " + savedProduct);
-
-        return savedProduct;
-    }
-
-    private Product createProduct(Category category) {
-        String title = RandomStringUtils.randomAlphabetic(10);
-        BigDecimal price = BigDecimal.valueOf(ThreadLocalRandom.current().nextLong(10L, 1_000L));
-
-        Product product = new Product(title, price, category);
-        log.debug("product: " + product);
-
-        return product;
-    }
+public class ProductControllerIntegrationTest extends BaseIntegrationTest {
 
     @Test
     @DisplayName("Успешный поиск первой страницы с товарами")
@@ -92,7 +29,7 @@ public class ProductControllerIntegrationTest {
         Product saved1 = saveProductInDB(category1);
         Product saved2 = saveProductInDB(category2);
 
-        mockMvc.perform(get(BASE_URL + "?pageIndex=1"))
+        mockMvc.perform(get(BASE_PRODUCT_URL + "?pageIndex=1"))
                 .andDo(print())
                 .andExpect(status().isOk())
 
@@ -132,7 +69,7 @@ public class ProductControllerIntegrationTest {
         Product saved4 = saveProductInDB(category1);
         Product saved5 = saveProductInDB(category2);
 
-        mockMvc.perform(get(BASE_URL + "?pageIndex=2"))
+        mockMvc.perform(get(BASE_PRODUCT_URL + "?pageIndex=2"))
                 .andDo(print())
                 .andExpect(status().isOk())
 
@@ -163,7 +100,7 @@ public class ProductControllerIntegrationTest {
         String savedAsJson = objectMapper.writeValueAsString(saved);
         log.debug("savedAsJson: " + savedAsJson);
 
-        mockMvc.perform(get(BASE_URL + "/" + saved.getId()))
+        mockMvc.perform(get(BASE_PRODUCT_URL + "/" + saved.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().json(savedAsJson, true));
@@ -172,7 +109,7 @@ public class ProductControllerIntegrationTest {
     @Test
     @DisplayName("Товар по id не найден")
     public void findByIdFail() throws Exception {
-        mockMvc.perform(get(BASE_URL + "/1"))
+        mockMvc.perform(get(BASE_PRODUCT_URL + "/1"))
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
@@ -189,7 +126,7 @@ public class ProductControllerIntegrationTest {
         String productDtoAsJson = objectMapper.writeValueAsString(productDto);
         log.debug("productDtoAsJson: " + productDtoAsJson);
 
-        mockMvc.perform(post(BASE_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(BASE_PRODUCT_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").isNumber())
@@ -216,7 +153,7 @@ public class ProductControllerIntegrationTest {
         String productDtoAsJson = objectMapper.writeValueAsString(productDto);
         log.debug("productDtoAsJson: " + productDtoAsJson);
 
-        mockMvc.perform(post(BASE_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(BASE_PRODUCT_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
 
@@ -237,7 +174,7 @@ public class ProductControllerIntegrationTest {
         String productDtoAsJson = objectMapper.writeValueAsString(productDto);
         log.debug("productDtoAsJson: " + productDtoAsJson);
 
-        mockMvc.perform(post(BASE_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
+        mockMvc.perform(post(BASE_PRODUCT_URL).content(productDtoAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
@@ -264,7 +201,7 @@ public class ProductControllerIntegrationTest {
         String newProductAsJson = objectMapper.writeValueAsString(newProduct);
         log.debug("newProductAsJson: " + newProductAsJson);
 
-        mockMvc.perform(put(BASE_URL + "/" + id).content(newProductAsJson).contentType(APPLICATION_JSON))
+        mockMvc.perform(put(BASE_PRODUCT_URL + "/" + id).content(newProductAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk());
 
@@ -297,7 +234,7 @@ public class ProductControllerIntegrationTest {
         String newProductAsJson = objectMapper.writeValueAsString(newProduct);
         log.debug("newProductAsJson: " + newProductAsJson);
 
-        mockMvc.perform(put(BASE_URL + "/" + nonExistentProductId).content(newProductAsJson).contentType(APPLICATION_JSON))
+        mockMvc.perform(put(BASE_PRODUCT_URL + "/" + nonExistentProductId).content(newProductAsJson).contentType(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
@@ -319,7 +256,7 @@ public class ProductControllerIntegrationTest {
         assertThat(productRepository.findAll().size()).isEqualTo(1);
         assertThat(categoryRepository.findAll().size()).isEqualTo(1);
 
-        mockMvc.perform(delete(BASE_URL + "/" + id))
+        mockMvc.perform(delete(BASE_PRODUCT_URL + "/" + id))
                 .andDo(print())
                 .andExpect(status().isNoContent());
 
@@ -336,7 +273,7 @@ public class ProductControllerIntegrationTest {
         assertThat(productRepository.findAll().size()).isEqualTo(1);
         assertThat(categoryRepository.findAll().size()).isEqualTo(1);
 
-        mockMvc.perform(delete(BASE_URL + "/" + nonExistentProductId))
+        mockMvc.perform(delete(BASE_PRODUCT_URL + "/" + nonExistentProductId))
                 .andDo(print())
                 .andExpect(status().isNotFound());
 
