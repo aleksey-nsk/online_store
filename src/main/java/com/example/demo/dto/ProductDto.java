@@ -30,6 +30,12 @@ public class ProductDto {
     @NotNull
     private Category category;
 
+    public ProductDto(String title, BigDecimal price, Category category) {
+        this.title = title;
+        this.price = price;
+        this.category = category;
+    }
+
     public static ProductDto valueOf(Product product) {
         return new ProductDto(
                 product.getId(),

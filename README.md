@@ -37,7 +37,8 @@ Spring Data JPA определяет интерфейс **Specification** для
 
 8. Реализовал валидацию данных с помощью **spring-boot-starter-validation**.
 
+9. Написал тесты (**интеграционные** и **unit**).
+
 # TODO list:
-- Написать тесты (**интеграционные** и **unit**).
 - Заиспользовать **Spring Security**.
 

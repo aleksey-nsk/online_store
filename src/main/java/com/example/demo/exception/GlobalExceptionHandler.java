@@ -20,6 +20,14 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(ProductDuplicateException.class)
+    public ResponseEntity<Object> handleProductDuplicate(RuntimeException e) {
+        String message = "Product duplicate: " + e.getMessage();
+        log.error(message);
+        Response response = new Response(message);
+        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<Object> handleUnhandledExceptions(Throwable t) {
         String exceptionUuid = UUID.randomUUID().toString();
