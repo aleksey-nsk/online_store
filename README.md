@@ -33,7 +33,7 @@ Spring Data JPA определяет интерфейс **Specification** для
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/04_product_specification.png)  
 
 7. Корзина реализована как **сессионный бин**:  
-![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/01_frontend.png)  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/05_cart.png)  
 
 8. Реализовал валидацию данных с помощью **spring-boot-starter-validation**.
 
