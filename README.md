@@ -39,5 +39,17 @@ Spring Data JPA определяет интерфейс **Specification** для
 
 9. Написал тесты (**интеграционные** и **unit**).
 
-# TODO list:
-- Заиспользовать **Spring Security**.
+10. Добавил **Spring Security**.
+
+Подключаем зависимость в pom-файл:  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/06_security_pom.png)  
+
+Чтобы CSRF работала с AngularJS необходима
+настройка `.and().csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())`. Для преобразования
+паролей по **алгоритму bcrypt** используем сайт https://www.browserling.com/tools/bcrypt. Конфигурационный файл
+настройки аутентификации для **dev-профиля**:    
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/07_security_dev.png)  
+
+Далее надо отключить аутентификацию для тестового профиля. Для этого создаём конфигурацию, разрешающую
+все запросы. Активируем данную конфигурацию только для **test-профиля** (с помощью аннотации **@Profile**):  
+![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/08_security_test.png)  
