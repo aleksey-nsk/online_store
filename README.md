@@ -41,4 +41,3 @@ Spring Data JPA определяет интерфейс **Specification** для
 
 # TODO list:
 - Заиспользовать **Spring Security**.
-
