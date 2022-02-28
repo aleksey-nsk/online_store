@@ -1,0 +1,23 @@
+server:
+    port: 5000
+
+logging:
+    level:
+        com.example.demo: debug
+    file:
+        name: logs/prod.log
+
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://aagjdmtfnt1y56.cpvjohkqloly.eu-central-1.rds.amazonaws.com:5432/postgres
+        username: prod
+        password: pswdprod
+    jpa:
+        show-sql: false
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+    liquibase:
+        enabled: true
+        change-log: classpath:db/changelog/db.changelog-master.yaml
