@@ -119,7 +119,7 @@ AWS всё создаст (это займёт несколько минут):
 Также можно перейти на страницу с параметрами приложения:  
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/15_online_store.png)  
 
-5. Следующий шаг - это создание БД. Для этого я нажать "Configuration", далее в списке конфигураций
+5. Следующий шаг - это создание БД. Для этого нажать "Configuration", далее в списке конфигураций
 справа от "Database" нажать кнопку "Edit":  
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/16_configuration_database.png)  
 
