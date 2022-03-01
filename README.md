@@ -3,7 +3,7 @@
 - Username: `user1` 
 - Password: `pswd1`
 
-# Info:
+# Info
 
 1. Проект **Интернет Магазин**.
 
