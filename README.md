@@ -1,3 +1,8 @@
+**Проект выложен на AWS**:
+- URL: http://onlinestore-env.eba-zt3tmkep.eu-central-1.elasticbeanstalk.com/
+- Username: `user1` 
+- Password: `pswd1`
+
 # Info:
 
 1. Проект **Интернет Магазин**.
@@ -54,7 +59,7 @@ Spring Data JPA определяет интерфейс **Specification** для
 все запросы. Активируем данную конфигурацию только для **test-профиля** (с помощью аннотации **@Profile**):  
 ![](https://github.com/aleksey-nsk/online_store/blob/main/screenshots/08_security_test.png)  
 
-# Как развернуть приложение на AWS (Amazon Web Services)
+# Как развернуть приложение на AWS
 
 1. **AWS (Amazon Web Services)** — коммерческое публичное **облако**, поддерживаемое и развиваемое компанией **Amazon**
 с 2006 года. Предоставляет подписчикам услуги как по инфраструктурной модели (виртуальные серверы, ресурсы хранения),
@@ -190,4 +195,4 @@ Amazon **RDS** (Amazon Relational Database Service) - позволяет про�
 8. **Использованные источники**:
 - [Heroku против AWS](https://ru.education-wiki.com/3703940-heroku-vs-aws)
 - [Развёртывание Spring Boot приложения на AWS](https://www.youtube.com/watch?v=NKX4mnj0mWQ)
-- [elastic-beanstalk: Развертывание веб-приложения Java](https://learntutorials.net/ru/elastic-beanstalk/topic/9207/%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B5%D0%B1-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-java-%D0%BD%D0%B0-%D1%8D%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D1%87%D0%BD%D0%BE%D0%BC-%D0%B1%D0%BE%D0%B1%D0%BE%D0%B2%D0%BE%D0%BC-%D1%81%D1%82%D0%B5%D0%B1%D0%BB%D0%B5)
+- [Развертывание веб-приложения Java на Elastic Beanstalk](https://learntutorials.net/ru/elastic-beanstalk/topic/9207/%D1%80%D0%B0%D0%B7%D0%B2%D0%B5%D1%80%D1%82%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B5%D0%B1-%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F-java-%D0%BD%D0%B0-%D1%8D%D0%BB%D0%B0%D1%81%D1%82%D0%B8%D1%87%D0%BD%D0%BE%D0%BC-%D0%B1%D0%BE%D0%B1%D0%BE%D0%B2%D0%BE%D0%BC-%D1%81%D1%82%D0%B5%D0%B1%D0%BB%D0%B5)
